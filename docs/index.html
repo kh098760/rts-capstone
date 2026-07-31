@@ -7,8 +7,25 @@
 </head>
 <body>
   <h1>FreeRTOS IPC Pipeline</h1>
-  <h2>Overview</h2>
+  <h2>Project Overview</h2>
   <p>Welcome to my avionics-themed FreeRTOS project! In this capstone, I decided to explore Inter-Process Communication (IPC) and fault injection for attitude packet generation 
     and consummation. The goal is to see how ineffective consummer process times affect data queuing and communication tasks.</p>
+  <h2>Live Demo</h2>
+  <iframe
+    width="800"
+    height="450"
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    title="Project Demo"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+  <h2>Architecture Overview</h2>
+  <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
+    coordinator and responder tasks can be categorized ad communication tasks. Once attitude packets are generated from the producer, it is used by the consumer </p>
+  <h3>Data</h3>
+  <h3>Proccess</h3>
+  <h3>Communication</h3>
+  <h2>Tasking Overview</h2>
+  <h2>Fault Injection & Hazard Overview</h2>
 </body>
 </html>
