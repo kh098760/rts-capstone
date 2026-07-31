@@ -60,26 +60,75 @@
   </iframe>
   <h2>Architecture Overview</h2>
   <img src="architecture.svg" alt="System Architecture" width="800">
-    <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
-      coordinator and responder tasks can be categorized as communication tasks. </p>
-    <h3>Data</h3>
+  <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
+    coordinator and responder tasks can be categorized as communication tasks. </p>
+    <h3>Data Tasking</h3>
       <p>Data comes in the form of attitude packets containing a random value from -10 to 10 and a timestamp. Attitude packets are genrated by the producer at a rate of 20Hz or 
         50ms. Once a packet has been formed, it is sent through a freeRTOS queue with a 10ms timeout to avoid delay. The consumer then receives the queue to process it. 
-    <h3>Proccessing</h3>
+    <h3>Consumer Proccessing</h3>
       <p>The process is implemented as a 40ms delay using vTaskDelay, lower than the packet production rate at 50ms to avoid congestion. However, there is a chance for the process to take 
         100ms to simulate a queue being overfilled and its respective faults (see Fault Injection & Hazard Overview).</p>
-    <h3>Communication</h3>
+    <h3>Communication Tasking</h3>
       <p>Communication is handled as a group event through event bits. When a producer produces a packet or a consumer finishes processing one, their respective production and process bits
         are raised. The cooridinator checks when both bits are raised, and if so, signal the responder task to run. The responder receives this notification and logs its notification count.</p>
-  <h2>Tasking Overview</h2>
+  <h2>Task Timing Overview</h2>
+  <p>The tasking is timed through vTaskDelay() instead of vTaskDelayUntil(), so there are no set deadlines for the tasks, however there are WCETs and BCETs which are important to view the timing
+  of the system</p>
+    <h3>Task Table</h3>
+    <table>
+      <thead>
+          <tr>
+              <th>Task</th>
+              <th>BCET B</th>
+              <th>WCET W</th>
+              <th>VET = B/W</th>
+              <th>Priority</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>Prod</td>
+              <td>50 ms</td>
+              <td>50 ms</td>
+              <td>1.0</td>
+              <td>8</td>
+          </tr>
+          <tr>
+              <td>Cons</td>
+              <td>40 ms</td>
+              <td>100 ms</td>
+              <td>0.4</td>
+              <td>8</td>
+          </tr>
+          <tr>
+              <td>Cord</td>
+              <td>90 ms</td>
+              <td>150 ms</td>
+              <td>0.6</td>
+              <td>9</td>
+          </tr>
+          <tr>
+              <td>Resp</td>
+              <td>90 ms</td>
+              <td>150 ms</td>
+              <td>0.6</td>
+              <td>12</td>
+          </tr>
+      </tbody>
+    </table>
+    <h3>Task Evidence</h3>
+    <p>Evidence of the times are based on the delays for each task and how it compounds for the next task. The producer always outputs data items at 50ms. The consumer can, at best, consume at 40ms or 
+      at worst, 100ms. This means the coordinator that relies on these two tasks takes anywhere from 90ms (best of prod and cons) or 150ms (worst of prod and cons) to coordinate with the responder. 
+      The responder is simply blocking until a notification is received from the coordinator, so it follows the same time as the coordinator.</p> 
+
   <h2>Fault Injection & Hazard Overview</h2>
   <p>The hazard implemented here is through a macro called PROCESS_TIME. This macro is a percentage value ranging from 0-100%, which represents the chance a consumer process takes 2x the amount 
     of time as the producer for a single data item. The producer is at 20Hz, which is 50ms per item. This means that there is a chance a consumer can take 100ms. Baseline consumer process is 40ms. 
     Queue size is 10 items. The back-pressure policy is simply dropping the latest packet produced when the queue is full to preserve real-time incoming data. Worst case is the queue is always clogged; 
-    thus, no new data comes in. At that point, there is an architectural or timing issue, not a queue issue.<p>
+    thus, no new data comes in. At that point, there is an architectural or timing issue, not a queue issue.</p>
     <h3>How to Experiment with Hazard</h3>
       <p> Change the percent chance between 0-100% in PROCESS_TIME (just standard int values). This determines the chance a process delay can occur. A sweet spot is 1-10%, anything higher typically 
-        immediately clogs the queue.Optionally, you can also adjust the time the producer outputs a data item or the process times once the consumer receives said item in the queue. This is implemnted 
+        immediately clogs the queue. Optionally, you can also adjust the time the producer outputs a data item or the process times once the consumer receives said item in the queue. This is implemnted 
         through vTaskDelay(). Whichever value you use for the producer time, ensure that the consumer has two values above and below this time; baseline and delayed process. Ideally, you would want the 
         baseline time to be 10-50% lower than the producer time and the delayed time to be 2-3x the producer time, this way you can see the queue size actively change without constantly clogging up. </p>
     <h3>How to View the Hazard in Effect</h3>
