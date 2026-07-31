@@ -1,1 +1,10 @@
-
+# Hazard Analysis Overview
+- The hazard implemented here is through a macro called PROCESS_TIME. This macro is a percentage value ranging from 0-100%, which represents the chance a consumer process takes 2x the amount of time as the producer for a single data item.
+- The producer is at 20Hz, which is 50ms per item. This means that there is a chance a consumer can take 100ms. Baseline consumer process is 40ms. Queue size is 10 items.
+- The back-pressure policy is simply dropping the latest packet produced when the queue is full to preserve real-time incoming data. Worst case is the queue is always clogged; thus, no new data comes in. At that point, there is an architectural or timing issue, not a queue issue
+# How to Experiment with Hazard
+- Change the percent chance between 0-100% in PROCESS_TIME (just standard int values). This determines the chance a process delay can occur. A sweet spot is 1-10%, anything higher typically immediately clogs the queue.
+- Optionally, you can also adjust the time the producer outputs a data item or the process times once the consumer receives said item in the queue. This is implemnted through vTaskDelay(). Whichever value you use for the producer time, ensure that the consumer has two values above and below this time; baseline and delayed process. Ideally, you would want the baseline time to be 10-50% lower than the producer time and the delayed time to be 2-3x the producer time, this way you can see the queue size actively change without constantly clogging up.
+# How to View the Hazard in Effect
+- There are two ways to view; serial and web server. The serial is limited and only contains the heartbeat, queue size and queue value dropped. Ideally, you would want to see the webserver view as it contains the event group bits status, drop count and drop percent in a user-friendly manner.
+- The web server has a refresh rate of 1kHz. It is suited for the avionics theme as attitude packets being transmitted through the queue. To view the webserver, it should be implemented through VScode (see firmware code) as it has been the only method successful so far for running the site through IP.
