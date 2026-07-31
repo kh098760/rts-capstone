@@ -4,6 +4,7 @@
 Prod
 Cons
 Cord
-Resp:
-hell
+Resp |
+100
+
 Total utilization U = <value>  (RM bound / EDF feasible: <note>)
