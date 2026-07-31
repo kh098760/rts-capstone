@@ -1,14 +1,14 @@
 # rts-capstone - Real-Time Systems Final Capstone
 
-## One sentence
-<your theme sentence>
+## Theme
+A real-time system that works, built to demonstrate attitude process delays and how it affects queues for an avionics role.
 
 ## Demo
 - Video: <YouTube / Wokwi link>
-- Live Wokwi: LASTNAME-FINAL-RTS26Summer
+- Live Wokwi: ELHAOUAJI-FINAL-RTS26Summer (https://wokwi.com/projects/471033187914654721)
 
 ## Architecture
-<diagram + 2–3 sentences on the data/control flow>
+![Architecture Diagram](docs/architecture.svg)
 
 ## Tasks & timing (WCET evidence)
 | Task | Period T | WCET C | U=C/T | Priority | Deadline |
