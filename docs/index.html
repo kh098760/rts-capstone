@@ -4,12 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FreeRTOS IPC Pipeline</title>
+  <title>My Project</title>
+  <style>
+      body {
+          background-color: #f4f4f4;   /* Light gray */
+          color: #222222;              /* Default text color */
+          font-family: Arial, Helvetica, sans-serif;
+      }
+
+      h1 {
+          color: #0055aa;
+          font-family: "Trebuchet MS", sans-serif;
+      }
+
+      h2 {
+          color: #444444;
+      }
+
+      p {
+          font-size: 18px;
+          line-height: 1.6;
+      }
+  </style>
 </head>
 <body>
   <h1>FreeRTOS IPC Pipeline</h1>
   <h2>Project Overview</h2>
   <p>Welcome to my avionics-themed FreeRTOS project! In this capstone, I decided to explore Inter-Process Communication (IPC) and fault injection for attitude packet generation 
-    and consummation. The goal is to see how ineffective consummer process times affect data queuing and communication tasks.</p>
+    and consummation. The goal is to see how ineffective consumer process times affect data queuing and communication tasks.</p>
   <h2>Live Demo</h2>
   <iframe
     width="800"
@@ -20,9 +42,12 @@
     allowfullscreen>
   </iframe>
   <h2>Architecture Overview</h2>
+  <img src="architecture.svg" alt="System Architecture" width="800">
   <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
     coordinator and responder tasks can be categorized ad communication tasks. Once attitude packets are generated from the producer, it is used by the consumer </p>
   <h3>Data</h3>
+  <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
+    coordinator and responder tasks can be categorized ad communication tasks. Once attitude packets are generated from the producer, it is used by the consumer </p>
   <h3>Proccess</h3>
   <h3>Communication</h3>
   <h2>Tasking Overview</h2>
