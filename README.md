@@ -1,7 +1,7 @@
 # rts-capstone - Real-Time Systems Final Capstone
 
 ## Theme
-A real-time system that works, built to demonstrate attitude process delays and how it affects queues for an avionics role.
+A real-time system that works, built to demonstrate process delays and how it affects IPC for an embedded software role in avionics.
 
 ## Demo
 - Video: <YouTube / Wokwi link>
