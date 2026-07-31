@@ -1,7 +1,4 @@
 # Tasks & timing (WCET evidence)
-|-Task-:| Period T:| WCET C:| U=C/T:| Priority:| Deadline:|
-|------|----h----:|-------:|------:|---------:|---------:|
-|------|---------:|-------:|------:|---------:|---------:|
-|------|---------:|-------:|------:|---------:|---------:|
+| Task | Period T | WCET C | U=C/T | Priority | Deadline |
 |------|---------:|-------:|------:|---------:|---------:|
 Total utilization U = <value>  (RM bound / EDF feasible: <note>)
