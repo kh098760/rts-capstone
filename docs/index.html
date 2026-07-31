@@ -83,7 +83,7 @@
         are raised. The cooridinator checks when both bits are raised, and if so, signal the responder task to run through task notification. The responder receives this notification and logs its notification count.</p>
   <h2>Task Timing Overview</h2>
   <p>The tasking is timed through vTaskDelay() instead of vTaskDelayUntil(), so there are no set deadlines for the tasks, however there are WCETs and BCETs which are important to view the timing
-  of the system</p>
+  of the system.</p>
     <h3>Task Table</h3>
     <table>
       <thead>
