@@ -60,13 +60,18 @@
   </iframe>
   <h2>Architecture Overview</h2>
   <img src="architecture.svg" alt="System Architecture" width="800">
-  <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
-    coordinator and responder tasks can be categorized ad communication tasks. Once attitude packets are generated from the producer, it is used by the consumer </p>
-  <h3>Data</h3>
-  <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
-    coordinator and responder tasks can be categorized ad communication tasks. Once attitude packets are generated from the producer, it is used by the consumer </p>
-  <h3>Proccess</h3>
-  <h3>Communication</h3>
+    <p>The firmware is situated around four tasks; producer, consumer, coordinator and responder. The producer and consumer tasks can be categorized as data tasks, while the 
+      coordinator and responder tasks can be categorized as communication tasks. </p>
+    <h3>Data</h3>
+      <p>Data comes in the form of attitude packets containing a random value from -10 to 10 and a timestamp. Attitude packets are genrated by the producer at a rate of 20Hz or 
+        50ms. Once a packet has been formed, it is sent through a freeRTOS queue with a 10ms timeout to avoid delay. The consumer then receives the queue to process it. 
+    <h3>Proccessing</h3>
+      <p>The process is implemented as a 40ms delay using vTaskDelay, lower than the packet production rate at 50ms to avoid congestion. However, there is a chance for the process to take 
+        100ms to simulate a queue being overfilled and its respective faults (see Fault Injection & Hazard Overview).</p>
+    <h3>Communication</h3>
+      <p>Communication is handled as a group event through event bits. When a producer produces a packet or a consumer finishes processing one, their respective production and process bits
+      are raised. The cooridinator checks when both bits are raised, and if so, signal the responder task to run. The responder receives this notification and logs its notification count.
+      </p>
   <h2>Tasking Overview</h2>
   <h2>Fault Injection & Hazard Overview</h2>
 </body>
