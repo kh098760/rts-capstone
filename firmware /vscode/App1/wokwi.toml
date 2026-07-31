@@ -1,0 +1,11 @@
+[wokwi]
+version = 1
+firmware = '.pio\build\esp32-s3-devkitc-1\firmware.bin'
+elf = '.pio\build\esp32-s3-devkitc-1\firmware.elf'
+
+[net]
+gateway = "http://localhost:9011"
+
+[[net.forward]]
+from = "localhost:9080"
+to = "target:80"

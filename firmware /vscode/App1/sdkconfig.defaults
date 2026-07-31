@@ -1,0 +1,20 @@
+# Non-default settings for App 1.
+# These get folded into your sdkconfig the first time you build.
+
+# Wi-Fi
+CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=10
+CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=32
+
+# HTTP server
+CONFIG_HTTPD_MAX_REQ_HDR_LEN=1024
+
+# FreeRTOS — keep both cores active
+CONFIG_FREERTOS_UNICORE=n
+CONFIG_FREERTOS_HZ=1000
+
+# Logging
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+
+# Task watchdog (we'll use it heavily later; turn off the panic for now)
+CONFIG_ESP_TASK_WDT_PANIC=n
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10

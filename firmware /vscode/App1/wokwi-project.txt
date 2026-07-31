@@ -1,0 +1,4 @@
+EEE 4775 Real-Time Systems — Summer 2026 — app1 scaffold
+
+Drop this folder into a new Wokwi ESP-IDF project, or upload the ZIP at
+https://wokwi.com/projects/new/esp-idf-esp32-s3 .
